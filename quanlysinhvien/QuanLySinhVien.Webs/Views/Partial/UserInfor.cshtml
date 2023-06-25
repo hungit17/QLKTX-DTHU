@@ -1,0 +1,25 @@
+﻿@{ 
+    var user=(QuanLySinhVien.Webs.Models.Identity.AspNetUser)Session[QuanLySinhVien.Common.CommonConstants.USER_SESSION];
+}
+
+@if (Request.IsAuthenticated)
+{
+    <div class="user-info">
+        <div class="image">
+            <img src="@user.Avatar" width="48" height="48" alt="User" />
+        </div>
+        <div class="info-container">
+            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@user.FullName</div>
+            <div class="email">@user.Email</div>
+            <div class="btn-group user-helper-dropdown">
+                <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="/Account/Profile"><i class="material-icons">person</i>Thông tin</a></li>
+                    <li role="seperator" class="divider"></li>
+                    <li><a href="/Account/LogOff"><i class="material-icons">input</i>Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+}

@@ -1,0 +1,187 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    var _student = (QuanLySinhVien.Models.Models.Students)ViewBag.Student;
+    var _room = (QuanLySinhVien.Models.Models.Room)ViewBag.Room;
+    var _contract = (QuanLySinhVien.Models.Models.Contract)ViewBag.Contract;
+
+}
+@section jsFooter{
+
+    <script>
+        $(document).ready(function () {
+            $("#printButton").click(function () {
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = { mode: mode, popClose: close };
+                $("div.content").printArea(options);
+            });
+        });
+        });
+    </script>
+    <style >
+        .content p{
+            text-align:justify;
+        }
+    </style>
+}
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <a href="#" class="btn btn-default waves-effect" id="printButton">In hợp đồng</a>
+            </div>
+            <div class="clearfix"> </div>
+            <div class="body content">
+                <div class="row">
+                    <div class="col-md-4 pull-left">
+                        <h4>
+                            <b>
+                                Trường Đại học Đồng Tháp
+
+                            </b>
+
+                        </h4>
+
+                    </div>
+                    <div class="col-md-8 align-center">
+                        <h4>
+                            <b>
+                                CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br />
+
+                                Độc lập – Tự do – Hạnh Phúc
+
+                            </b>
+
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="float:right;padding:30px">
+                        Tp Tam Kỳ,  ngày @DateTime.Now.Day tháng @DateTime.Now.Month năm @DateTime.Now.Year
+                    </div>
+                </div>
+
+
+
+
+                <h4 class="align-center">
+                    <b>
+                        <u>
+                            HỢP ĐỒNG THUÊ CHỖ Ở NỘI TRÚ
+                        </u>
+
+                    </b>
+                    <br />
+                    <br />
+                </h4>
+          
+           
+                <p>
+                    Căn cứ quyết định viêc thành lập phòng Công tác Sinh viên Trường Đại học Đồng Tháp
+                </p>
+                <p>
+                    Căn cứ vào đơn đề nghị thuê nhà ở của sinh viên
+                </p>
+                <p>
+
+                    Hôm nay, Ngày @DateTime.Now.Day tháng @DateTime.Now.Month năm @DateTime.Now.Year Chúng tôi gồm:
+                </p>
+                <h5>
+                    <b>
+
+                        BÊN CHO THUÊ NHÀ Ở SINH VIÊN(Gọi tắc bên A)
+                    </b>
+                </h5>
+                <ul style="list-style-type:none">
+                    <li> -	Ông (bà):.......... Giám đốc trung tâm hỗ trợ sinh viên Trường Đại học Đồng Tháp.</li>
+                    <br />
+                    <li> - Địa chỉ: Khuôn viên trường Đại học Đồng Tháp  - 783 Phạm Hữu Lầu Phường 6 Thành phố Cao Lãnh Đồng Tháp.</li>
+                    <br />
+                    <li> - Điện thoại: (0277) 3881008. </li>
+                </ul>
+
+                <h5>
+                    <b>
+                        BÊN THUÊ NHÀ Ở SINH VIÊN(gọi tắc bên B)
+                    </b>
+                </h5>
+                <p>
+                    Họ và tên: <b>@_student.Name </b>  <br />
+                    Ngày tháng năm sinh:<b>@_student.BirthDay.Value.ToString("d") </b> <br />
+                    Giới tính: @{var gioitinh = _student.Gender == 1 ? "Nam" : "Nữ";}
+                                                                                       <b>@gioitinh</b>
+                </p>
+                <p>
+
+                    - MSSV: <b>@_student.ID</b> <br />
+                    - Lớp: <b>@_student.ClassName</b>
+                </p>
+                <p>
+
+                    Điện thoại:<b>@_student.PhoneNumber </b> Email:<b>@_student.Email</b> 
+                </p>
+                <p>
+
+                    Hai bên thống nhất về việc cho thuê và thuê chổ để ở và học tập ngoài giờ tại:  <br />
+                    Điều 1. Đặc điểm chính của nhà ở sinh viên:
+                </p>
+                <p>
+                    Mã phòng: @_room.RoomCode		Phòng: @_room.RoomName	Số sinh viên: @_room.SoSV
+
+                    Bên B được trang bị tài sản như: Giường cá nhân, bàn, ghế, quạt, cấp điện, cấp nước sạch, truyền hình, thiết bị vệ sinh…v.v
+                    Điều 2. Giá cho thuê nhà ở sinh viên và phương thức thanh toán:
+                </p>
+                <p>
+                    1.Giá cho thuê: @_room.GiaPhong VN đồng/giường ở/tháng/SV
+                </p>
+                <p>
+                    2.Phương thức thanh toán:
+                    a) Thanh toán tiền thuê nhà bằng tiền mặt.
+
+                    b) Các chi phí sử dụng điện, nước, điện thoại và các dịch vụ khác (nếu có) do bên B thanh toán trực tiếp với Trung tâm hỗ trợ sinh viên từ ngày kí hợp đồng.
+
+                    c) Giá cho thuê nhà ở sinh viên sẽ được điều chỉnh khi Nhà nước (hoặc nhà trường ) có thay đổi khung giá hoặc giá cho thuê. Bên A có trách nhiệm thông báo giá mới cho bên B trước 03 tháng trước khi điều chỉnh giá.
+
+                    Điều 3. Thời điểm giao nhận chổ ở và thời hạn cho thuê
+                    Thời điểm giao nhận chổ ở: ngày @_contract.CreatedDate.Day ,tháng @_contract.CreatedDate.Month,năm @_contract.CreatedDate.Year ngày tính tiền thuê phòng ở.
+                    Thời gian thuê  4 Năm, kể từ ngày @DateTime.Now.Day ,tháng @DateTime.Now.Month năm @DateTime.Now.Year
+                </p>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="pull-left align-center">
+                            <h4>
+                                <b>
+                                    Bên B<br />
+                                    ( Ký và ghi rõ họ tên)
+                                </b>
+                            </h4>
+                        </div>
+                        <div class="pull-right align-center">
+                            <h4>
+                                <b>
+                                    Đại diện bên A<br />
+                                    ( Ký và ghi rõ họ tên)
+                                </b>
+                            </h4>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <br />
+                <br />
+                <br />
+
+
+            </div>
+        </div>
+    </div>
+</div>

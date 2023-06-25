@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "Danh sách hóa đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/billController.js"></script>
+}
+
+<div class="alert alert-info align-center">
+    Thông báo danh sách phòng còn nợ thanh toán tiền điện nước
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+       
+            <div class="body">
+               
+                        <div class="header">
+                            <div class="row">
+                                <h4 class="col-pink text-center">
+
+                                    Danh sách phòng chưa thanh toán hóa đơn
+                                </h4>
+
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="alert alert-info text-center" id="notifi"></div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên phòng</th>
+                                            <th>Tiền điện</th>
+                                            <th>Tiền nước</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Thanh toán</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbDontBill"></tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+         
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+<script id="data-DontBill" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+        <td>{{RoomName}}</td>
+        <td>{{{TienDien}}}</td>
+        <td>{{{TienNuoc}}}</td>
+        <td>{{{TongTien}}}</td>
+        <td>{{{ThanhToan}}}</td>
+
+    </tr>
+
+</script>
+
+

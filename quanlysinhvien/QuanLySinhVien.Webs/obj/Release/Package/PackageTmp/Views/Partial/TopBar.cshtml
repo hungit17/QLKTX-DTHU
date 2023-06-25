@@ -1,0 +1,225 @@
+﻿@{
+
+    var user = (QuanLySinhVien.Webs.Models.Identity.ApplicationUser)Session[QuanLySinhVien.Common.CommonConstants.USER_SESSION];
+}
+@if (!ViewBag.StudentRole)
+{
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+
+
+
+            <div class="user-info">
+                <div class="image">
+                    <img src="@user.Avatar" width="48" height="48" alt="User" />
+                </div>
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@user.FullName</div>
+                    <div class="email">@user.Email</div>
+                    <div class="btn-group user-helper-dropdown">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="/Account/Profile"><i class="material-icons">person</i>Thông tin</a></li>
+                            <li  class="divider"></li>
+                            <li><a href="/Account/LogOff"><i class="material-icons">input</i>Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <ul class="list">
+                    <li class="header">Quản lý phân quyền tài khoản</li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">security</i>
+                            <span>Phân quyền</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="/Role/Index">
+                                    <span>Danh sách quyền</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Role/ManagerUsers">
+                                    <span>Quản lý phân quyền</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Users/Index">
+                                    <span>Danh sách tài khoản</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="header">Danh mục quản lý</li>
+                    <li class="active">
+                        <a href="/">
+                            <i class="material-icons">home</i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Contract/Index">
+                            <i class="material-icons">work</i>
+                            <span>Quản lý hồ sơ sinh viên</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Students/Index">
+                            <i class="material-icons">contacts</i>
+                            <span>Quản lý sinh viên</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Room/Index">
+                            <i class="material-icons">business</i>
+                            <span>Quản lý Phòng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/MyClass/Index">
+                            <i class="material-icons">class</i>
+                            <span>Quản lý Lớp</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Department/Index">
+                            <i class="material-icons">location_city</i>
+                            <span>Quản lý Khoa</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Notification/Index">
+                            <i class="material-icons"> perm_device_information</i>
+                            <span>Quản lý Thông báo</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Bill/Index">
+                            <i class="material-icons">assignment</i>
+                            <span>Quản lý Hóa đơn</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Posts/Index">
+                            <i class="material-icons">fiber_new</i>
+                            <span>Quản lý bài viết</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">trending_down</i>
+                            <span>Xem chỉ số công tơ</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="/CongToDien/Index">
+                                    <span>Công tơ điện</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/CongToNuoc/Index">
+                                    <span>Công tơ nước</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="header">Báo cáo thống kê</li>
+                    <li>
+                        <a href="/Students/_StudentChart">
+                            <i class="material-icons col-red">donut_large</i>
+                            <span>Thống kê sinh viên</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Room/_RoomChart">
+                            <i class="material-icons col-amber">donut_large</i>
+                            <span>Thống kê phòng</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; @DateTime.Now.Year <a href="javascript:void(0);">-Quản lý Ký túc xá</a>.
+                </div>
+
+            </div>
+            <!-- #Footer -->
+        </aside>
+
+    </section>
+}
+else
+{
+    <section>
+        <aside id="leftsidebar" class="sidebar">
+            <div class="user-info">
+                <div class="image">
+                    <img src="@user.Avatar" width="48" height="48" alt="User" />
+                </div>
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@user.FullName</div>
+                    <div class="email">@user.Email</div>
+                    <div class="btn-group user-helper-dropdown">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="/Account/Profile"><i class="material-icons">person</i>Thông tin</a></li>
+                            <li  class="divider"></li>
+                            <li><a href="/Account/LogOff"><i class="material-icons">input</i>Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu">
+                <ul class="list">
+
+                    <li class="header">Danh mục sinh viên</li>
+                    <li class="active">
+                        <a href="/">
+                            <i class="material-icons">home</i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Contract/LoadFormContract">
+                            <i class="material-icons">collections_bookmark</i>
+                            <span>Nộp hồ sơ ở ký túc xá</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Bill/StudentNotifi">
+                            <i class="material-icons">error_outline</i>
+                            <span>Thông báo </span>
+                        </a>
+                    </li>
+                  
+                </ul>
+            </div>
+
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; @DateTime.Now.Year <a href="javascript:void(0);">-Quản lý Ký túc xá</a>.
+                </div>
+
+            </div>
+        </aside>
+    </section>
+
+}

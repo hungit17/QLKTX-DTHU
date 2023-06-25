@@ -1,0 +1,63 @@
+﻿
+@if (!ViewBag.StudentRole)
+{
+    <div class="header">
+        <h3 class="align-center">Danh mục quản lý</h3>
+    </div>
+    <div class="body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card hover-zoom-effect">
+                    <div class="header icon bg-blue">
+                        <span class="material-icons icon-circle">assessment</span>
+                    </div>
+                    <div class="body">
+
+                        <a href=""><h4 class="center">Báo cáo &amp; Thống kê</h4></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card ">
+                    <div class="header icon bg-green">
+                        <span class="material-icons icon-circle">security</span>
+                    </div>
+                    <div class="body">
+
+                        <a href="/Role/ManagerUsers"><h4 class="center ">Quản lý phân quyền</h4></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card ">
+                    <div class="header icon bg-light-green">
+                        <span class="material-icons icon-circle">library_books</span>
+                    </div>
+                    <div class="body">
+
+                        <a href="/Contract/Index"><h4 class="center ">Hợp đồng sinh viên</h4></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card ">
+                    <div class="header icon bg-amber">
+                        <span class="material-icons icon-circle">business</span>
+                    </div>
+                    <div class="body">
+
+                        <a href="/Room/Index"><h4 class="center ">Quản lý phòng ở</h4></a>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+}

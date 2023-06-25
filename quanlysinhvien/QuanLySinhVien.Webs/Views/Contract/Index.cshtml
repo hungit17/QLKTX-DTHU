@@ -1,0 +1,346 @@
+﻿@{
+    ViewBag.Title = "Quản lý hợp đồng sinh viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/contractController.js"></script>
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtAvatar').val(url);
+                $("#txt_Student_Avatar").attr('src', url);
+            };
+            finder.popup();
+        });
+    </script>
+}
+
+<div class="alert alert-info align-center">
+    Quản lý hợp đồng sinh viên ký túc xá
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary waves-effect waitMe" href="/Contract/ExportExcel">
+                            <i class="material-icons"></i> Xuất ra excel
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="col-sm-10">
+                            <div class="form-group form-inline pull-left">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm..." name="Search" id="txtSearch">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <i class="btn btn-dark material-icons pull-right" id="btn-refresh">autorenew</i>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                            <tr>
+                                <th>Sinh viên Đăng ký</th>
+                                <th>Email</th>
+                                <th>Điện thoại</th>
+                                <th>Ngày đăng ký</th>
+                                <th>File hợp đông</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbData">
+
+                        </tbody>
+
+                    </table>
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                            <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <div class="pagination" id="pagination">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item_{{ID}} {{colorRow}}" data-id="{{ID}}">
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+
+        <td>{{Name}}</td>
+        <td>{{Email}}</td>
+        <td>{{PhoneNumber}}</td>
+        <td>{{CreatedDate}}</td>
+        <td><a href="/Assets/Upload/Contract/{{UrlContract}}">Xem hồ sơ</a></td>
+        <td>{{Status}}</td>
+        <td>
+            <a data-color="indigo" data-id="{{ID}}"
+               class="text-info waves-effect btn-Approved">
+                <i class="material-icons" data-toggle="tool-tip" data-placement="top" data-original-title="Duyệt hồ sơ">security</i>
+            </a>
+
+            <a class="col-pink waves-effect btn-delete" data-toggle="tool-tip" data-placement="top" data-original-title="Xóa hồ sơ" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+
+
+<!--modal viewdetail-->
+<!--modal create popup-->
+<div class="modal fade" id="viewContract" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-col-indigo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <img src="" id="txt_Avatar" class="img img-responsive img-thumbnail" />
+
+                    </div>
+                    <div class="col-md-9">
+                        <div class="content">
+                            <div class="text" id="txt_ContractName"></div>
+                            <br />
+                            <hr />
+                            <div class="text" id="txt_Name"></div>
+                            <br />
+                            <hr />
+                            <div class="text" id="txt_CreatedDate"></div>
+                            <br />
+                            <hr />
+                            <div class="text" id="txt_ExpireDate"></div>
+                            <br />
+                            <hr />
+                            <div class="text" id="txt_Content"></div>
+                            <br />
+                            <hr />
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<canvas id="myChart"></canvas>
+
+
+
+<div class="modal fade" id="modalContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span id="modal-title"></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="frmSaveDataContract">
+                    <input type="hidden" id="txt_Contract_Id">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="ContractName">Tên hợp đồng</label>
+                            <input type="text" class="form-control" name="ContractName" id="txt_Contract_Name">
+
+                        </div>
+                        <span class="validate col-pink"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="CreatedDate">Ngày tạo </label>
+                            <input type="date" name="CreatedDate" class="datepicker form-control" id="txt_Contract_CreatedDate" placeholder="Chọn ngày...">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="ExpireDate">Ngày hết hạn </label>
+                            <input type="date" name="ExpireDate" class="datepicker form-control" id="txt_Contract_ExpireDate" placeholder="Chọn ngày...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="Content">Nội dung </label>
+                            <textarea type="text" name="Content" class=" form-control" id="txt_Contract_Content" placeholder="Nội dung..."></textarea>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnSaveContract">Tiếp theo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalStudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span id="modal-title"></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="frmSaveDataStudent">
+                    <input type="hidden" id="txt_Student_Id">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="Name">Tên Sinh Viên</label>
+                            <input type="text" class="form-control" name="Name" id="txt_Student_Name">
+
+                        </div>
+                        <span class="validate col-pink"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="txt_Student_Avatar">Avatar</label>
+
+                            <input type="text" class="form-control" name="Avatar" id="txt_Student_Avatar">
+
+                        </div>
+                        <img src="" height="50" width="50" id="txtImg" class="img img-circle" />
+
+                        <br />
+                        <button type="button" id="btnSelectImage" class="btn btn-primary waves-effect">Chọn hình</button>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="BirthDay">Ngày sinh</label>
+                            <input type="date" class="datepicker form-control" id="txt_Student_BirthDay" placeholder="Chọn ngày...">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="Gender">Giới tính</label>
+                            <br />
+                            <input name="Gender" type="radio" id="Nam" value="1" checked />
+                            <label for="Nam">Nam</label>
+                            <input name="Gender" type="radio" value="0" id="Nu" />
+                            <label for="Nu">Nữ</label>
+                            <input name="Gender" type="radio" value="-1" class="with-gap" id="Khac" />
+                            <label for="Khac">Khác</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="Address">Địa chỉ</label>
+                            <input type="text" class="form-control" name="Address" id="txt_Student_Address">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="PhoneNumber">Số điện thoại</label>
+                            <input type="tel" class="form-control" name="PhoneNumber" id="txt_Student_PhoneNumber">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnSaveStudent">Tiếp theo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span id="modal-title"></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="frmSaveDataRoom">
+                    <input type="hidden" id="txt_Room_Id">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="roomCode">Mã phòng</label>
+                            <input type="text" class="form-control" name="roomCode" id="txt_Room_Code">
+
+                        </div>
+                        <span class="validate col-pink"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="RoomName">Tên phòng</label>
+                            <input type="text" class="form-control" name="RoomName" id="txt_Room_Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="Desctiption">Miêu tả</label>
+                            <input type="text" class="form-control" name="Description" id="txt_Room_Description">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="demo-switch-title">Trạng thái</div>
+                        <div class="switch">
+                            <label><input type="checkbox" id="txt_Room_Status" checked><span class="lever switch-col-lime"></span></label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnSaveRoom">Kết thúc</button>
+            </div>
+        </div>
+    </div>
+</div>

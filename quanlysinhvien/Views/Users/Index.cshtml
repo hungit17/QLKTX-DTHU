@@ -1,0 +1,154 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/usersController.js"></script>
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtAvatar').val(url);
+                $("#txtImg").attr('src', url);
+            };
+            finder.popup();
+        });
+    </script>
+}
+
+<div class="block-header">
+    <h2>Quản lý tài khoản</h2>
+</div>
+
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <div class="pull-left">
+                            <a href="/Role/ManagerUsers" class="btn btn-primary waves-lime">Quản lý phân quyền</a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-sm-4">
+                        <div class="col-sm-10">
+                            <div class="form-group form-inline pull-left">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm..." name="Search" id="txtSearch">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <i class="btn btn-dark material-icons pull-right" id="btn-refresh">autorenew</i>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                            <tr>
+                                <th>Hình đại diện</th>
+                                <th>Tài khoản</th>
+                                <th>Họ và tên</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbData"></tbody>
+
+                    </table>
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                            <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <div class="pagination" id="pagination">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+        <td><img width="50" height="50" class="img-responsive thumbnail" src="{{Avatar}}" /></td>
+        <td>{{Account}}</td>
+        <td>{{FullName}}</td>
+        <td>{{BirthDay}}</td>
+        <td>{{Address}}</td>
+        <td>
+            <a data-color="indigo" data-id="{{ID}}"
+               class="text-info waves-effect btn-view">
+                <i class="material-icons" data-toggle="tool-tip" data-placement="top" data-original-title="Cấp quyền">beenhere</i>
+            </a>
+           
+            <a class="col-pink waves-effect btn-delete" data-toggle="tool-tip" data-placement="top" data-original-title="Xóa hồ sơ" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+
+
+<!--modal viewdetail-->
+<!--modal create popup-->
+<div class="modal fade" id="userDetail" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content modal-col-indigo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>Tên quyền</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody id="tbRole"></tbody>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="data-Role" type="x-tmpl-mustache">
+    <tr>
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+     
+        <td>{{RoleName}}</td>
+     
+    </tr>
+</script>

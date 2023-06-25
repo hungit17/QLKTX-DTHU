@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "Danh sách khoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="/Assets/template/js/controllers/departmentController.js"></script>
+
+}
+
+<div class="alert alert-info align-center">
+   Quản lý khoa trường Đại học sư phạm Quảng Nam
+</div>
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-4">
+
+                        <button class="btn btn-success waves-effect" id="btnAddNew"><i class="material-icons">add_circle</i> Thêm mới</button>
+                        <button class="btn btn-success waves-effect" disabled id="btn-Deletemulti"><i class="material-icons">delete_forever</i> Xóa</button>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary waves-effect waitMe" href="/Department/ExportExcel">
+                            <i class="material-icons"></i> Xuất ra excel
+                        </a>
+                      
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="col-sm-10">
+                            <div class="form-group form-inline pull-left">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm..." name="Search" id="txtSearch">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <i class="btn btn-dark material-icons pull-right" id="btn-refresh">autorenew</i>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" name="selectAll" id="selectAll" class="filled-in chk-col-red" />
+                                    <label for="selectAll"></label>
+                                </th>
+                                <th>Mã khoa</th>
+                                <th>Tên khoa</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbData"></tbody>
+
+                    </table>
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                            <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <div class="pagination" id="pagination">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+
+        <td>
+            <input type="checkbox" id="select-{{ID}}" name="selectAll" data-id="{{ID}}" class="chk-col-red selectedItem" />
+            <label for="select-{{ID}}"></label>
+        </td>
+
+        <td>{{DepartmentCode}}</td>
+        <td>{{DepartmentName}}</td>
+
+        <td>
+            <a data-color="indigo" data-id="{{ID}}"
+               class="text-info waves-effect btn-view">
+                <i class="material-icons" data-toggle="tool-tip" data-placement="top" data-original-title="Xem hồ sơ">info_outline</i>
+            </a>
+            <a data-toggle="tool-tip" data-placement="top" data-original-title="Sửa hồ sơ" class="text-dark waves-effect btn-edit" data-id="{{ID}}">
+                <i class="material-icons">mode_edit</i>
+            </a>
+            <a class="col-pink waves-effect btn-delete" data-toggle="tool-tip" data-placement="top" data-original-title="Xóa hồ sơ" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+
+
+<!--modal viewdetail-->
+<!--modal create popup-->
+<div class="modal fade" id="viewDepartment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modal-col-indigo">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content">
+                            <div class="text" id="txt_DepartmentCode"></div>
+                            <br />
+                            <hr />
+                            <div class="text" id="txt_DepartmentName"></div>
+                            <br />
+                            <hr />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="modalDepartment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span id="modal-title"></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="frmSaveData">
+                    <input type="hidden" id="txtId">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="DepartmentCode">Mã khoa</label>
+                            <input type="text" class="form-control" name="DepartmentCode" id="txtDepartmentCode">
+
+                        </div>
+                        <span class="validate col-pink"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="DepartmentName">Tên khoa</label>
+                            <input type="text" class="form-control" name="DepartmentName" id="txtDepartmentName">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>

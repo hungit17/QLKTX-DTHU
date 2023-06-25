@@ -1,0 +1,11 @@
+﻿@model IEnumerable<QuanLySinhVien.Models.StudentsViewModel>
+@{
+    ViewBag.Title = "GetStudents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach(var student in Model)
+{
+    <h1>@student.Name</h1><br />
+}
+

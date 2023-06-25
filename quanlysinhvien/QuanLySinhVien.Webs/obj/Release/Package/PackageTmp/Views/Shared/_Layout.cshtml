@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Quản lý sinh viên ký túc xá trường đại học Quảng Nam</title>
+    <link href="@Url.Content("~/Content/toastr.css")" rel="stylesheet" type="text/css" />
+    <!--template plugin-->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core Css -->
+    @*<link href="/Assets/template/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">*@
+    @*<link href="/Assets/template/plugins/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+        <link href="~/Assets/template/plugins/sweetalert/sweetalert.css" rel="stylesheet" />*@
+    <!-- Waves Effect Css -->
+    @*<link href="/Assets/template/plugins/node-waves/waves.css" rel="stylesheet" />*@
+    <!-- Animation Css -->
+    @*<link href="~/Assets/template/plugins/dropzone/basic.min.css" rel="stylesheet" />
+        <link href="~/Assets/template/plugins/dropzone/dropzone.min.css" rel="stylesheet" />
+        <link href="/Assets/template/css/select2.min.css" rel="stylesheet" />
+        <link href="~/Assets/template/plugins/multi-select/css/multi-select.css" rel="stylesheet" />
+        <link href="/Assets/template/plugins/animate-css/animate.css" rel="stylesheet" />
+        <!-- Morris Chart Css-->
+        <!-- Custom Css -->
+        <link href="/Assets/template/css/style.css" rel="stylesheet">
+        <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+        <link href="/Assets/template/css/themes/all-themes.css" rel="stylesheet" />*@
+    <!--end template plugin-->
+    <!--js template-->
+    @*@Styles.Render("~/root/bootstrap")*@
+    @Styles.Render("~/root/css")
+
+
+
+
+</head>
+<body class="theme-red">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="root-name align-items-center" href="/">Hệ thống quản lý ký túc xá sinh viên trường đại học Quảng Nam</a>
+            </div>
+
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+
+
+    @{ Html.RenderAction("TopBar", "Partial");}
+
+    <section class="content">
+        <div class="container-fluid">
+
+            @RenderBody()
+        </div>
+    </section>
+
+    @*<script src="~/Assets/template/plugins/jquery/jquery.min.js"></script>
+        <script src="~/Assets/template/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="~/Assets/template/plugins/Chart.min.js"></script>
+        <!-- Bootstrap Core Js -->
+        <script src="~/Assets/template/plugins/toastr/toastr.js"></script>
+        <script src="~/Assets/template/plugins/sweetalert/sweetalert.min.js"></script>
+
+
+        <script src="~/Assets/template/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+        <!-- Waves Effect Plugin Js -->
+        <script src="/Assets/template/plugins/node-waves/waves.js"></script>
+        <!-- Jquery CountTo Plugin Js -->
+        @*<script src="/Assets/template/plugins/jquery-countto/jquery.countTo.js"></script>*@
+
+
+    @*<script src="/Assets/template/plugins/jquery.validate.min.js"></script>
+        <script src="/Assets/template/plugins/bootbox.min.js"></script>*@
+    @*<script src="~/Assets/template/plugins/jquery-steps/jquery.steps.min.js"></script>*@
+    @*<script src="~/Assets/template/plugins/sweetalert/sweetalert.min.js"></script>*@
+    @*<script src="~/Assets/template/plugins/form-wizard.js"></script>*@
+    <!-- Sparkline Chart Plugin Js -->
+    @*<script src="/Assets/template/plugins/jquery-sparkline/jquery.sparkline.js"></script>*@
+    <!-- Custom Js -->
+    @*<script src="/Assets/template/js/admin.js"></script>*@
+
+    <!-- Demo Js -->
+    @*<script src="/Assets/template/plugins/moment.min.js"></script>
+        <script src="/Assets/template/plugins/locale.js"></script>*@
+    @*<script src="/Assets/template/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>*@
+    @*<script src="/Assets/template/plugins/mustache.min.js"></script>
+        <script src="/Assets/template/plugins/select2.min.js"></script>
+        <script src="~/Assets/template/plugins/multi-select/js/jquery.multi-select.js"></script>
+        <script src="/Assets/template/plugins/pagination.js"></script>
+        <script src="/Assets/template/plugins/ckfinder/ckfinder.js"></script>
+        <script src="~/Assets/template/plugins/tinymce/tinymce.min.js"></script>
+        <script src="~/Assets/template/plugins/dropzone/dropzone.min.js"></script>*@
+    <!--Start of Tawk.to Script-->
+    <!--End of Tawk.to Script-->
+    @*<script src="/Assets/template/js/controllers/sharedController.js"></script>*@
+    @Scripts.Render("~/root/jquery")
+    @Scripts.Render("~/root/bootstrap")
+    @Scripts.Render("~/root/scripts")
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5ad8a809227d3d7edc241d9b/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    @RenderSection("jsFooter", required: false)
+
+</body>
+</html>

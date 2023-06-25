@@ -1,0 +1,40 @@
+﻿
+<div class="tintuc">
+
+    @foreach (var post in Model)
+    {
+        var mess = string.Empty;
+        var url = "/bai-viet/" + post.MetaTitle + "/"+ post.ID;
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+
+                <a href="@url"><img class="img-responsive" src="@post.Avatar" alt="@post.Name" /></a>
+                </div>
+                <div class="col-md-8">
+                    <div class="tintuc-items-desc">
+                        <a href="@url" title="@post.Name"><h1>@post.Name</h1></a>
+                        <i class="fa fa-clock-o">
+                            @{
+
+                if (post.CreatedDate == null)
+                {
+                    mess = "--";
+                }
+                else
+                {
+                    mess = post.CreatedDate.ToString("dd/MM/yyyy");
+                }
+
+                            } @mess
+                        </i>
+
+                    </div>
+                </div>
+            </div>
+          
+         
+        </div>
+    }
+</div>
+

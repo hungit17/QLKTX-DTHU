@@ -1,0 +1,112 @@
+﻿@model QuanLySinhVien.Webs.Models.Identity.RegisterViewModel
+
+
+@{
+    Layout = null;
+    ViewBag.Title = "Đăng ký tài khoản";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Đăng ký | Hệ thống KTX DThU</title>
+    <!-- Favicon-->
+    <link rel="icon" href="/Assets/template/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core Css -->
+    <link href="/Assets/template/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="/Assets/template/plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="/Assets/template/plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Custom Css -->
+    <link href="/Assets/template/css/style.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+    <div class="bg-img"></div>
+    <div class="bg-text ">
+        <div class="signup-box ">
+            <div class="card">
+                <div class="body body2">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "col-pink" })
+                        <img class="logotruong_1" src="/Assets/img/%c4%90%e1%ba%a1i_h%e1%bb%8dc_%c4%90%e1%bb%93ng_Th%c3%a1p.png">
+                        <div class="htql-ktx">Hệ thống Quản lý KTX - DThU</div>
+                        <div class="dktk">Đăng ký tài khoản</div>
+                        if (ViewBag.Notifi != null)
+                        {
+                            <p class="col-cyan">
+                                @ViewBag.Notifi
+                            </p>
+                        }
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                            </span>
+                            <div class="form-line">
+                                @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", @placeholder = "Họ tên" })
+                            </div>
+                            @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "col-pink" })
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">email</i>
+                            </span>
+                            <div class="form-line">
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Email" })
+
+                            </div>
+                            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "col-pink" })
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">lock</i>
+                            </span>
+                            <div class="form-line">
+                                @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                            </div>
+                            @Html.ValidationMessageFor(x => x.Password, "", new { @class = "col-pink" })
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">lock</i>
+                            </span>
+                            <div class="form-line">
+                                @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control", @placeholder = "Xác nhận Mật khẩu" })
+
+                            </div>
+                            @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "col-pink" })
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Đăng ký</button>
+                        <div class="m-t-25 m-b--5 align-center">
+                            <a class="small" href="/Account/Login">Bạn đã có tài khoản?</a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery Core Js -->
+    <script src="/Assets/template/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="/Assets/template/plugins/bootstrap/js/bootstrap.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="/Assets/template/plugins/node-waves/waves.js"></script>
+    <!-- Validation Plugin Js -->
+    <script src="/Assets/template/plugins/jquery-validation/jquery.validate.js"></script>
+    <!-- Custom Js -->
+    <script src="/Assets/template/js/admin.js"></script>
+
+</body>
+</html>

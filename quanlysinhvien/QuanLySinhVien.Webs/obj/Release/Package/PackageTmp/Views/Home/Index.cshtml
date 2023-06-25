@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            @{ Html.RenderAction("ManagerCategory", "Home");}
+
+            <div class="header">
+
+                <h3 class="align-center">Tin tức ký túc xá</h3>
+            </div>
+            <div class="body">
+
+                @{ Html.RenderAction("GetPosts", "Home");}
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

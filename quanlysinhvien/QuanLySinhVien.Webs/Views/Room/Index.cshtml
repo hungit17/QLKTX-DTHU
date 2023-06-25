@@ -1,0 +1,511 @@
+﻿@{
+    ViewBag.Title = "Danh sách phòng ở";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/roomController.js"></script>
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImages').val(url);
+                $("#txtImg").attr('src', url);
+            };
+            finder.popup();
+        });
+
+        $(document).ready(function () {
+            $('#checkStatus').prop('checked', true);
+        });
+
+        $(document).ready(function () {
+            $('#txtListRoomName').select2();
+            $('#SelectRoom').select2();
+        });
+
+    </script>
+    <script src="~/Assets/template/plugins/tinymce/tinyConfig.js"></script>
+}
+
+<div class="alert alert-info align-center">
+    Danh sách phòng ở ký túc xá sinh viên
+</div>
+
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <ul class="nav nav-tabs tab-col-teal" role="tablist" style="margin-left:4px">
+                <li role="presentation">
+                    <a href="#roomStudent" data-toggle="tab">
+                        <i class="material-icons col-pink">supervisor_account</i> Phòng có sv
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#home_with_icon_title" data-toggle="tab">
+                        <i class="material-icons col-purple">home</i> Danh sách phòng
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#createRoom" data-toggle="tab">
+                        <i class="material-icons col-yellow">add_circle_outline</i> Tạo mới phòng
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#EditRoom" data-toggle="tab">
+                        <i class="material-icons col-orange">brush</i> Sửa thông tin phòng
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#addStudentToRoom" data-toggle="tab">
+                        <i class="material-icons col-light-blue">group_add</i> Cấp phòng
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#thongke" data-toggle="tab">
+                        <i class="material-icons col-green">show_chart</i> Thống kê
+                    </a>
+                </li>
+
+
+            </ul>
+            <div class="body">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="roomStudent">
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button class="btn btn-danger waves-effect" disabled id="btn-Deletemulti"><i class="material-icons">delete_forever</i> Xóa</button>
+                                    <a class="btn btn-primary waves-effect  waitMe" href="/Room/ExportExcel">
+                                        <i class="material-icons"></i> Xuất ra excel
+                                    </a>
+
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="col-sm-10">
+                                        <div class="form-group form-inline pull-left">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" placeholder="Tìm kiếm..." name="Search" id="txtSearch">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <i class="btn btn-dark material-icons pull-right btn-refresh">autorenew</i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" name="selectAll" id="selectAll" class="filled-in chk-col-red" />
+                                                <label for="selectAll"></label>
+                                            </th>
+                                            <th>Mã phòng</th>
+                                            <th>Tên phòng</th>
+                                            <th>Miêu tả</th>
+                                            <th>Trạng thái phòng</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbData"></tbody>
+
+                                </table>
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                                        <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                        <div class="pagination" id="pagination">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="home_with_icon_title">
+
+                        <div class="col-sm-4">
+                            <div class="col-sm-10">
+                                <div class="form-group form-inline pull-left">
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" placeholder="Tìm kiếm..." name="Search" id="txtEmptyRoomSearch">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <i class="btn btn-dark material-icons pull-right btn-refresh">autorenew</i>
+                            </div>
+
+                        </div>
+                        <div class="body">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th>Tên phòng</th>
+                                        <th>Trạng thái phòng</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tbEmptyRoomData"></tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in " id="createRoom">
+                        <div class="header">
+                            <h3 id="roomHeader">Thêm mới phòng</h3>
+                        </div>
+                        <div class="body">
+                            <form role="form" id="frmSaveData">
+                                <input type="hidden" id="txtId">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="roomCode">Mã phòng (<span class="col-pink">*</span>)</label>
+                                        <input type="text" class="form-control" name="roomCode" id="txtRoomCode" required>
+                                    </div>
+                                    <span class="validate col-pink"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="RoomName">Tên phòng (<span class="col-pink">*</span>)</label>
+                                        <input type="text" class="form-control" name="RoomName" id="txtRoomName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Loại phòng (<span class="col-pink">*</span>)</label>
+                                    <div>
+                                        <select name="TypeRoom" id="txtTypeRoom" class="js-example-basic-single" required>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="SoSv">Số sinh viên (<span class="col-pink">*</span>)</label>
+                                        <input type="number" class="form-control" name="SoSv" id="txtSoSv" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="GiaPhong">Giá phòng (<span class="col-pink">*</span>)</label>
+                                        <input type="number" class="form-control" name="GiaPhong" id="txtGiaPhong" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mã số công tơ điện (<span class="col-pink">*</span>)</label>
+                                    <div>
+                                        <select name="MaCTD" id="txtCongToDien" class="js-example-basic-single" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mã số công tơ nước (<span class="col-pink">*</span>)</label>
+                                    <div>
+                                        <select name="MaCTN" id="txtCongToNuoc" class="js-example-basic-single" required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label>Miêu tả <small>(Hãy tạo một video ngắn mô tả phòng này)</small></label>
+                                        <textarea type="text" class="form-control" name="Description" id="txtContent"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <br />
+                                <div class="form-group">
+                                    <div class="demo-switch-title">Trạng thái</div>
+                                    <div class="switch">
+                                        <label><input type="checkbox" id="txtStatus" checked><span class="lever switch-col-lime"></span></label>
+                                    </div>
+                                </div>
+                            </form>
+                            <br />
+                            <span> Các trường được đánh dấu (<span class="col-pink">*</span>) được yêu cầu nhập</span>
+                            <br />
+                            <div class="form-group">
+
+                                <button type="button" class="btn btn-secondary waves-effect" id="btnCancle" data-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="btnSave">Thêm</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in " id="EditRoom">
+                        <div class="header">
+                            <h3 id="roomHeader">Chỉnh sửa thông tin phòng</h3>
+                        </div>
+                        <div class="form-group">
+                            <label>Chọn phòng để chỉnh sửa (<span class="col-pink">*</span>)</label>
+                            <div>
+                                <select name="MaCTD" id="SelectRoom" class="js-example-basic-single" required></select>
+                                <input type="button" name="name" value="Tải dữ liệu" class="btn btn-primary waves-effect btn-LoadDetails" />
+                            </div>
+
+                        </div>
+                        <div class="body">
+                            <form role="form" id="frmEditData">
+                                <input type="hidden" id="EditId">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="roomCode">Mã phòng (<span class="col-pink">*</span>)</label>
+                                        <input type="text" class="form-control" name="EditroomCode" id="EditRoomCode" required>
+                                    </div>
+                                    <span class="validate col-pink"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="RoomName">Tên phòng (<span class="col-pink">*</span>)</label>
+                                        <input type="text" class="form-control" name="EditRoomName" id="EditRoomName" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Loại phòng (<span class="col-pink">*</span>)</label>
+                                    <div>
+                                        <select name="EditMaLoaiPhong" id="EditMaLoaiPhong" class="js-example-basic-single" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="SoSv">Số sinh viên (<span class="col-pink">*</span>)</label>
+                                        <input type="number" class="form-control" name="SoSv" id="EditSoSv" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="GiaPhong">Giá phòng (<span class="col-pink">*</span>)</label>
+                                        <input type="number" class="form-control" name="GiaPhong" id="EditGiaPhong" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mã số công tơ điện (<span class="col-pink">*</span>)</label>
+                                    <div>
+                                        <select name="EditMaCTD" id="EditCongToDien" class="js-example-basic-single" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mã số công tơ nước (<span class="col-pink">*</span>)</label>
+                                    <div>
+                                        <select name="EditMaCTN" id="EditCongToNuoc" class="js-example-basic-single" required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label>Miêu tả <small>(Hãy tạo một video ngắn mô tả phòng này)</small></label>
+                                        <textarea type="text" class="form-control" name="EditDescription" id="EditContent"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <br />
+                                <div class="form-group">
+                                    <div class="demo-switch-title">Trạng thái</div>
+                                    <div class="switch">
+                                        <label><input type="checkbox" id="EditStatus" checked><span class="lever switch-col-lime"></span></label>
+                                    </div>
+                                </div>
+                            </form>
+                            <br />
+                            <span> Các trường được đánh dấu (<span class="col-pink">*</span>) được yêu cầu nhập</span>
+                            <br />
+                            <div class="form-group">
+
+                                <button type="button" class="btn btn-secondary waves-effect" id="btnCancle" data-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-primary waves-effect" id="SaveEdit">Lưu thay đổi</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="thongke">
+                        <div class="header">
+                            <h3 id="roomHeader">Thống kê phòng </h3>
+                        </div>
+                        <div class="body">
+                            <canvas id="myChart"></canvas>
+
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="addStudentToRoom">
+                        <div class="header">
+                            <h3 id="roomHeader">Thêm sinh viên vào phòng ký túc xá</h3>
+                        </div>
+                        <div class="body">
+                            <form role="form" id="frmSaveData">
+                                <input type="hidden" id="txtId">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="ListRoomName">Tên phòng(<span class="col-pink">*</span>)</label>
+                                            <div>
+
+                                                <select name="ListRoomName" id="txtListRoomName" class="js-example-basic-single" required></select>
+                                                
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="listStudent">Danh sách sinh viên chưa có phòng(<span class="col-pink">*</span>)</label>
+                                    <div class="">
+
+                                        <select multiple="multiple" class="js-example-basic-single" id="listStudent"></select>
+                                    </div>
+
+                                </div>
+
+                                <div class="footer">
+                                    <input type="button" class="btn btn-primary waves-effect btn-Save" value="Thêm sinh viên được chọn" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+        <td>
+            <input type="checkbox" id="select-{{ID}}" name="selectAll" data-id="{{ID}}" class="chk-col-red selectedItem" />
+            <label for="select-{{ID}}"></label>
+        </td>
+        <td>{{RoomCode}}</td>
+        <td>{{RoomName}}</td>
+        <td>
+            <a class="col-pink waves-effect btn-ViewDetail" data-toggle="tool-tip" data-placement="top" data-original-title="Xem mô tả" data-id="{{ID}}">
+                <i class="material-icons">description</i>
+            </a>
+        </td>
+        <td>{{{Status}}}</td>
+
+        <td>
+            <a class="col-pink waves-effect btn-ListStudent" data-toggle="tool-tip" data-placement="top" data-original-title="Danh sách sv" data-id="{{ID}}">
+                <i class="material-icons">view_list</i>
+            </a>
+            <a class="col-pink waves-effect btn-delete" data-toggle="tool-tip" data-placement="top" data-original-title="Xóa hồ sơ" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+<script id="emtyroom-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+        
+        <td>{{RoomName}}</td>
+        <td>{{Status}}</td>
+    </tr>
+</script>
+<script>
+    // Lấy danh sách phòng từ server
+    //$.ajax({
+    //    url: "/Room/LoadRoomList",
+    //    type: "GET",
+    //    dataType: "json",
+    //    success: function (response) {
+    //        if (response.status === true) {
+    //            // Xóa nội dung hiện tại của tbody
+    //            $("#tbEmptyRoomData").empty();
+
+    //            // Lặp qua danh sách phòng và thêm dữ liệu vào tbody
+    //            var template = $("#emtyroom-template").html();
+    //            var rendered = Mustache.render(template, { data: response.data });
+    //            $("#tbEmptyRoomData").append(rendered);
+    //        } else {
+    //            console.log("Lỗi: Không thể tải danh sách phòng");
+    //        }
+    //    },
+    //    error: function (xhr, status, error) {
+    //        console.log("Lỗi: " + error);
+    //    }
+    //});
+
+</script>
+<!--modal viewdetail-->
+<!--modal create popup-->
+<div class="modal fade" id="viewRoom" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel">Thông tin phòng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="content">
+
+                            <div class="text" id="txt_RoomName"></div>
+                            <br />
+                            <hr />
+
+                            <div class="text" id="txt_Description"></div>
+                            <br />
+                            <hr />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="viewListStudent" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Danh sách sinh viên</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="content">
+                            <ul id="loadList">
+                                <li></li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>

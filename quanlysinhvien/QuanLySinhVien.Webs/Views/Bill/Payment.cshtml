@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var _bill = (QuanLySinhVien.Models.Models.Bill)ViewBag.Bill;
+    var _room = (QuanLySinhVien.Models.Models.Room)ViewBag.Room;
+    var _congtodien = (QuanLySinhVien.Models.Models.CongToDien)ViewBag.CongToDien;
+    var _congtonuoc = (QuanLySinhVien.Models.Models.CongToNuoc)ViewBag.CongToNuoc;
+    var tongtien = _congtodien.TongTien + _congtonuoc.TongTien;
+}
+@section jsFooter{
+    <script>
+        $(document).ready(function (e) {
+
+            $("#printButton").click(function () {
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = { mode: mode, popClose: close };
+                $("div.content").printArea(options);
+            });
+        });
+
+        var ctd_Tongtien = sharedController.formatNumber(@_congtodien.TongTien, ".", ",");    
+        var ctn_Tongtien = sharedController.formatNumber(@_congtonuoc.TongTien, ".", ","); 
+        var tongtien = sharedController.formatNumber(@tongtien, ".", ","); 
+        $('#tiendien').html(ctd_Tongtien);
+        $('#tiennuoc').html(ctn_Tongtien);
+        $('#tongtien').html(tongtien);
+    </script>
+
+}
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header ">
+                <a href="#" class="btn btn-default waves-effect" id="printButton">In hóa đơn điện nước</a>
+            </div>
+            <div class="clearfix"> </div>
+            <div class="body content">
+                <div class="row">
+                    <div class="col-md-12 align-center">
+                        <h4>
+                            <b>
+                                Ban quản lý ký túc xá trường Đại học Đồng Tháp
+
+                            </b>
+
+                        </h4>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div style="float:right;padding:30px">
+                        Tp Tam Kỳ,  ngày @DateTime.Now.Day tháng @DateTime.Now.Month năm @DateTime.Now.Year
+                    </div>
+                </div>
+
+
+
+
+                <h4 class="align-center">
+                    <b>
+                        <u>
+                            BIÊN NHẬN THANH TOÁN TIỀN ĐIỆN + TIỀN NƯỚC
+                        </u>
+
+                    </b>
+                    <br />
+                    <br />
+                </h4>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            Mã phòng: <b>@_room.ID</b>
+                        </p>
+                        <p>
+                            Tên phòng nhận: <b> @_room.RoomName</b>
+                        </p>
+                        <p>
+                            Số công tơ điện:    <b> @_congtodien.MaSoCongTo</b>
+                        </p>
+                        <p>
+                            Số công tơ nước: <b>@_congtonuoc.MaSoCongTo</b>
+                        </p>
+                        <p>
+                            Ngày lập: <b>@_bill.CreatedDate.ToString("d")</b>
+                        </p>
+                        <p>
+                            Hạn thu: <b>@_bill.NgayThu.ToString("d")</b>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td><b>Loại tiền thu</b></td>
+                                    <td><b>Mã công tơ</b></td>
+                                    <td><b>Chỉ số củ</b></td>
+                                    <td><b>Chỉ số mới</b></td>
+                                    <td><b>Tiêu thụ</b></td>
+                                    <td><b>Thành tiền</b></td>
+
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tiền điện</td>
+                                    <td>@_congtodien.MaSoCongTo</td>
+                                    <td>@_congtodien.ChiSoCu</td>
+                                    <td>@_congtodien.ChiSoMoi</td>
+                                    <td>@_congtodien.TieuThu</td>
+                                    <td id="tiendien"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tiền nước</td>
+                                    <td>@_congtonuoc.MaSoCongTo</td>
+                                    <td>@_congtonuoc.ChiSoCu</td>
+                                    <td>@_congtonuoc.ChiSoMoi</td>
+                                    <td>@_congtonuoc.TieuThu</td>
+                                    <td id="tiennuoc"></td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td><b>Tổng thanh toán</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td id="tongtien" class="col-pink">
+                                       
+                                </td>
+                            </tr>
+                        </tbody>
+
+
+                    </table>
+                </div>
+
+
+
+            </div>
+            <br />
+            <br />
+            <br />
+
+
+        </div>
+    </div>
+</div>
+</div>
+

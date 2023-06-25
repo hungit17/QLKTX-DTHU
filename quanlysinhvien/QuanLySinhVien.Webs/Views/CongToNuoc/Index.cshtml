@@ -1,0 +1,149 @@
+﻿
+@{
+
+    ViewBag.Title = "Danh sách công tơ nước";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/contonuocController.js"></script>
+
+}
+<div class="alert alert-info align-center">
+    Quản lý công tơ nước
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+              
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary waves-effect waitMe" href="/CongToNuoc/ExportExcel">
+                            <i class="material-icons"></i> Xuất ra excel
+                        </a>
+                  
+                       
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="col-sm-10">
+                            <div class="form-group form-inline pull-left">
+                                <div class="form-line">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm..." name="Search" id="txtSearch">
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <i class="btn btn-dark material-icons pull-right" id="btn-refresh">autorenew</i>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="body">
+                <div id="formAddNew">
+                    <form id="frmSaveData">
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="MaCongTo" id="txtCongToCode" class="form-control" placeholder="Mã công tơ">
+                                    </div>
+                                    <span class="validate col-pink"></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="number" value="1.0" id="txtChiSoCu" class="form-control text-center" placeholder="Chỉ số củ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="number" value="1.0" id="txtChiSoMoi" class="form-control text-center" placeholder="Chỉ số mới">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                <button type="button" id="btn-AddNew" class="btn btn-primary btn-lg m-l-15 waves-effect">Thêm mới</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                            <tr>
+                                <th>Mã công tơ</th>
+                                <th>Chỉ số củ</th>
+                                <th>Chỉ số mới</th>
+                                <th>Tiêu thụ</th>
+                                <th>Thành tiền + <span class="col-pink small"><br />5%(VAT)10%(MT)</span></th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbData"></tbody>
+
+                    </table>
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                            <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <div class="pagination" id="pagination">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+
+        <td>
+            <div class="form-line">
+                <input type="text" id="txtMaSoCongTo-{{ID}}" class="form-control text-center" style="max-width:120px" value="{{MaSoCongTo}}" readonly ondblclick="this.readOnly='';">
+            </div>
+        </td>
+        <td>
+            <div class="form-line">
+                <input type="number" id="txtOldIndex-{{ID}}" class="form-control text-center" style="max-width:120px" value="{{ChiSoCu}}" readonly ondblclick="this.readOnly='';">
+            </div>
+        </td>
+
+        <td>
+            <div class="form-line">
+                <input type="number" id="txtNewIndex-{{ID}}" class="form-control text-center" style="max-width:120px" value="{{ChiSoMoi}}" readonly ondblclick="this.readOnly='';">
+            </div>
+        </td>
+        <td class="text-center">{{TieuThu}}</td>
+        <td class="text-center">{{{TongTien}}}</td>
+
+        <td>
+
+            <a data-toggle="tool-tip" data-placement="top" data-original-title="Sửa hồ sơ" class="col-blue waves-effect btn-save" data-id="{{ID}}">
+                <i class="material-icons">save</i>
+            </a>
+            <a class="col-pink waves-effect btn-delete" data-toggle="tool-tip" data-placement="top" data-original-title="Xóa hồ sơ" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+</script>
+

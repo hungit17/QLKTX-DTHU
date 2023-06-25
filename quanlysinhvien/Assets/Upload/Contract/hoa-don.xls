@@ -1,0 +1,36 @@
+    <table>
+    <thead>
+        <tr>
+            <th scope="col">
+ID            </th>
+            <th scope="col">
+Ma cong to            </th>
+            <th scope="col">
+Chi so cu            </th>
+            <th scope="col">
+Chỉ số moi            </th>
+            <th scope="col">
+Tieu thu            </th>
+            <th scope="col">
+Tong tien            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>CT01</td>
+            <td>1</td>
+            <td>180</td>
+            <td>179</td>
+            <td>4046954,62</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>CTN02</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0,00</td>
+        </tr>
+    </tbody>
+    </table>

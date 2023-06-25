@@ -1,0 +1,44 @@
+    <table>
+    <thead>
+        <tr>
+            <th scope="col">
+M&#227; ph&#242;ng            </th>
+            <th scope="col">
+T&#234;n Ph&#242;ng            </th>
+            <th scope="col">
+Mi&#234;u tả ph&#242;ng            </th>
+            <th scope="col">
+Trạng th&#225;i ph&#242;ng            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>A2-112</td>
+            <td>Ph&#242;ng 112 Khu A2</td>
+            <td>M&amp;ocirc; tả ph&amp;ograve;ng 112 khu A2&lt;br /&gt;
+H&amp;igrave;nh ảnh m&amp;ocirc; tả về ph&amp;ograve;ng&lt;br /&gt;
+&lt;img alt=&quot;&quot; src=&quot;/Assets//Upload/99fed61bb26ea5a338808d52dc6d2810.jpeg&quot; style=&quot;height:224px; width:400px&quot; /&gt;&lt;br /&gt;
+&amp;nbsp;Xem th&amp;ecirc;m 1 h&amp;igrave;nh nữa&lt;br /&gt;
+&lt;img alt=&quot;&quot; src=&quot;/Assets//Upload/41cf72b64aeff8f5d6364c3305601113.jpeg&quot; style=&quot;height:224px; width:400px&quot; /&gt;</td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>C 002</td>
+            <td>Ph&#242;ng 2 khu C</td>
+            <td>&lt;img alt=&quot;&quot; src=&quot;/Assets//Upload/images.jpg&quot; style=&quot;height:225px; width:225px&quot; /&gt;</td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>P4A1</td>
+            <td>Phong 2 khu A1</td>
+            <td>chiad</td>
+            <td>False</td>
+        </tr>
+        <tr>
+            <td>A1002</td>
+            <td>Ph&#242;ng 02 khu a1</td>
+            <td>M&amp;ocirc; tả</td>
+            <td>False</td>
+        </tr>
+    </tbody>
+    </table>

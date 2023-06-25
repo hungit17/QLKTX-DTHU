@@ -1,0 +1,277 @@
+﻿@{
+    ViewBag.Title = "Quản lý tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<style>
+    a.btn-active {
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/postsController.js"></script>
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtAvatar').val(url);
+                $("#txtImg").attr('src', url);
+            };
+            finder.popup();
+        });
+    </script>
+    <script>
+        $('#txtPostName').select2();
+    </script>
+    <script src="~/Assets/template/plugins/tinymce/tinyConfig.js"></script>
+}
+
+<div class="alert alert-info align-center">
+    Quản lý bài viết
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <ul class="nav nav-tabs" role="tablist" style="margin-left:4px">
+                <li role="presentation" class="active">
+                    <a href="#home_with_icon_title" data-toggle="tab">
+                        <i class="material-icons col-pink">home</i> HOME
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#addNew" data-toggle="tab">
+                        <i class="material-icons col-green">add_circle</i> Tạo bài viết
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#editNew" data-toggle="tab">
+                        <i class="material-icons col-red">brush</i> Chỉnh sửa bài viết
+                    </a>
+                </li>
+
+            </ul>
+            <div class="body">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home_with_icon_title">
+
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button class="btn btn-danger waves-effect" disabled id="btn-Deletemulti"><i class="material-icons">delete_forever</i> Xóa</button>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-10">
+                                        <div class="form-group form-inline pull-left">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" placeholder="Tìm kiếm..." name="Search" id="txtSearch">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <i class="btn btn-dark material-icons pull-right" id="btn-refresh">autorenew</i>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" name="selectAll" id="selectAll" class="filled-in chk-col-red" />
+                                                <label for="selectAll"></label>
+                                            </th>
+                                            <th>Tên bài viết</th>
+                                            <th>Hình đại diện</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbData"></tbody>
+
+                                </table>
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                                        <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                        <div class="pagination" id="pagination">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="addNew">
+
+                        <div class="modal-body">
+                            <form role="form" id="frmSaveData">
+                                <input type="hidden" id="txtId">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="Name">Tên bài viết</label>
+                                        <input type="text" class="form-control" name="Name" id="txtName">
+
+                                    </div>
+                                    <span class="validate col-pink"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="txtAvatar">Hình đại diện</label>
+
+                                        <input type="text" class="form-control" name="Avatar" id="txtAvatar">
+
+                                    </div>
+                                    <img src="" height="50" width="50" id="txtImg" class="img img-circle" />
+
+                                    <br />
+                                    <button type="button" id="btnSelectImage" class="btn btn-primary waves-effect">Chọn hình</button>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label>Nội dung bài viết</label>
+                                        <textarea type="date" class="form-control" name="Content" id="txtContent"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-switch-title">Trạng thái</div>
+                                    <div class="switch">
+                                        <label><input type="checkbox" id="txtStatus" checked><span class="lever switch-col-lime"></span></label>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary" id="btnSave">Tạo bài viết</button>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="editNew">
+
+                        <div class="modal-body">
+                            <form role="form" id="frmEditData">
+                                <input type="hidden" id="EditId">
+                                <div class="form-group">
+                                    <label>Chọn một bài viết (<span class="col-pink">*</span>)</label>
+                                    <div>
+                                        <select name="PostName" id="txtPostName" class="js-example-basic-single" required></select>
+                                        <button type="button" class="btn btn-primary" id="loadData">Tải dữ liệu</button>
+                                    </div>
+                           
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="Name">Tên bài viết</label>
+                                        <input type="text" class="form-control" name="EditName" id="EditName">
+
+                                    </div>
+                                    <span class="validate col-pink"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label for="txtAvatar">Hình đại diện</label>
+
+                                        <input type="text" class="form-control" name="EditAvatar" id="EditAvatar">
+
+                                    </div>
+                                    <img src="" height="50" width="50" id="EditImg" class="img img-circle" />
+
+                                    <br />
+                                    <button type="button" id="btnSelectImage" class="btn btn-primary waves-effect">Chọn hình</button>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <label>Nội dung bài viết</label>
+                                        <textarea type="date" class="form-control" name="EditContent" id="EditContent"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-switch-title">Trạng thái</div>
+                                    <div class="switch">
+                                        <label><input type="checkbox" id="EditStatus" checked><span class="lever switch-col-lime"></span></label>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary" id="SaveEdit">Lưu thay đổi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+        <td>
+            <input type="checkbox" id="select-{{ID}}" name="selectAll" data-id="{{ID}}" class="chk-col-red selectedItem" />
+            <label for="select-{{ID}}"></label>
+        </td>
+        <td width="30%">{{Name}}</td>
+        <td><img class="img-responsive" style="max-width:150px" src="{{Avatar}}" alt="" /></td>
+        <td>{{CreatedDate}}</td>
+        <td>{{{Status}}}</td>
+
+        <td>
+            <a data-color="indigo" data-id="{{ID}}"
+               class="text-info waves-effect btn-view">
+                <i class="material-icons" data-toggle="tool-tip" data-placement="top" data-original-title="Xem nội dung">local_library</i>
+            </a>
+            <a class="col-pink waves-effect btn-delete" data-toggle="tool-tip" data-placement="top" data-original-title="Xóa hồ sơ" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+<div class="modal fade" id="viewPosts" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="content">
+
+                            <div class="text" id="txt_Content"></div>
+                            <br />
+                            <hr />
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Quản lý các loại phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/typeRoomController.js"></script>
+
+}
+
+<div class="alert alert-info align-center">
+    Quản lý loại phòng trường Đại học Đồng Tháp
+</div>
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-4">
+
+                        <button class="btn btn-success waves-effect text-danger" id="btnAddNew"><i class="material-icons">add_circle</i> Thêm mới</button>
+                        <button class="btn btn-success waves-effect" disabled id="btn-Deletemulti"><i class="material-icons">delete_forever</i> Xóa</button>
+
+                    </div>
+                    <div class="col-sm-4">
+                       
+
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                            <tr>
+                                <th>Số thứ tự</th>
+                                <th>Tên loại phòng</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbData"></tbody>
+
+                    </table>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+        <td>{{IDIndex}}</td>
+        <td>{{TenLoaiPhong}}</td>
+
+        <td>
+            <a data-toggle="tool-tip" data-placement="top" data-original-title="chỉnh sửa" class="text-dark waves-effect btn-edit" data-id="{{ID}}">
+                <i class="material-icons">mode_edit</i>
+            </a>
+            <a class="col-pink waves-effect btn-delete" data-toggle="tool-tip" data-placement="top" data-original-title="Xóa hồ sơ" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+</script>
+
+<div class="modal fade" id="modalTypeRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <span id="modal-title"></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="frmSaveData">
+                    <input type="hidden" id="txtId">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label >Tên loại phòng</label>
+                            <input type="text" class="form-control" name="TypeRoomName" maxlength="10" id="txtTypeRoomName">
+                        </div>
+                        <span class="validate"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>

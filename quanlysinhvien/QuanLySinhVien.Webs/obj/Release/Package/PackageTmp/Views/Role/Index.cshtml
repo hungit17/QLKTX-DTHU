@@ -1,0 +1,196 @@
+﻿    @model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+
+@{
+    ViewBag.Title = "Danh sách quyền";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script>
+        $('#addNew').click(function () {
+            $('#form_AddRole').removeAttr('hidden');
+        });
+        $('#add-Role').click(function () {
+            var roleName = $('#txtRoleName').val();
+            if (roleName == '') {
+                toastr.error("Không được để trống!");
+            } else {
+                $.ajax({
+                    url: '/Role/Create',
+                    data: {
+                        Name: roleName
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status = true) {
+                            toastr.success(res.message);
+                            location.reload();
+                        } else {
+                            toastr.error(res.message);
+                        }
+                    }
+                })
+            }
+        });
+        $('.btn-Edit').click(function () {
+
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/Role/Edit',
+                data: {
+                    id: id
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (res) {
+                    var data = res.data;
+                    if (res.status = true) {
+                        $('#txtEditRoleName').val(data.Name);
+                        $('#txtID').val(data.Id);
+                        $('#form_EditRole').removeAttr('hidden');
+                    } else {
+                        toastr.error(res.message);
+                    }
+                }
+            })
+        });
+        $('#save-Role').click(function () {
+
+            var id = $('#txtID').val();
+            var name = $('#txtEditRoleName').val();
+            $.ajax({
+                url: '/Role/Save',
+                data: {
+                    id: id,
+                    roleName: name
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status = true) {
+                        location.reload();
+                        toastr.success(res.message);
+                    
+                    } else {
+                        toastr.error(res.message);
+                    }
+                }
+            })
+        });
+        $('.btn-delete').click(function () {
+            var id = $(this).data('id');
+            bootbox.confirm("Bạn có chắc chắn muốn xóa danh mục này không?", function (result) {
+                if (result) {
+                $.ajax({
+                        url: '/Role/Delete',
+                        data: {
+                            id: id
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.status = true) {
+                                location.reload();
+                                toastr.success(res.message);
+                               
+                            } else {
+                                toastr.error(res.message);
+                            }
+                        }
+                    })
+                };
+
+            });
+            
+        });
+    </script>
+    
+    }
+<div class="alert alert-info text-center">
+    Quản lý quyền
+</div>
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <p>
+                            <a href="#" id="addNew" class="btn btn-primary wave-effect"><i class="material-icons">add_circle_outline</i> Thêm mới quyền</a>
+                        </p> 
+                    </div>
+                    <div class="col-sm-3">
+                        <p>
+                            <a href="/Role/ManagerUsers" class="btn btn-success wave-effect"><i class="material-icons">code</i> Quản lý quyền</a>
+                        </p>
+                    </div>
+                </div><br />
+                      <div class="row">
+                          <form hidden id="form_AddRole">
+                              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                          <input type="text" id="txtRoleName" class="form-control" placeholder="Tên quyền..." autofocus>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                  <a href="#" id="add-Role" class="btn btn-info waves-effect">thêm</a>
+                              </div>
+                          </form>
+                         
+                      </div>
+                      <div class="row">
+                          <form hidden id="form_EditRole">
+                              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                  <div class="form-group">
+                                      <input type="hidden" id="txtID" />
+                                      <div class="form-line">
+                                          <input type="text" id="txtEditRoleName" class="form-control">
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                                  <a href="#" id="save-Role" class="btn btn-info waves-effect">Lưu lại</a>
+                              </div>
+                          </form>
+                      </div>
+            </div>
+            <div class="body">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+
+                                <a class="col-indigo waves-effect btn-Edit" data-id="@item.Id">
+                                    <i class="material-icons">create</i>
+                                </a> 
+                                <a class="col-pink waves-effect btn-delete" data-id="@item.Id">
+                                    <i class="material-icons">delete_forever</i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>

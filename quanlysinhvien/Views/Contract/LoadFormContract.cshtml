@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "Đăng ký thông tin ở ký túc xá";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/contractController.js"></script>
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtAvatar').val(url);
+                $("#txtImg").attr('src', url);
+            };
+            finder.popup();
+        });
+        Dropzone.options.dropzoneForm = {
+            init: function () {
+                this.on("complete", function (data) {
+                    var res = JSON.parse(data.xhr.responseText);
+                });
+            }
+        };
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.selectListClass').select2();
+            $('.selectListDepartment').select2();
+        });
+    </script>
+}
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card" id="studentForm">
+            <div class="header">
+                <h2>Nhập thông tin sinh viên đăng ký</h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right"></ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <form role="form" id="frmSaveDataStudent">
+                    <input type="hidden" id="txt_Student_Id">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="Name">Tên Sinh Viên(<span class="col-pink">*</span>)</label>
+                            <input type="text" class="form-control" name="Name" id="txt_Name" required>
+
+                        </div>
+                        <span class="validate col-pink"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="txt_Avatar">Avatar</label>
+
+                            <input type="text" class="form-control" name="Avatar" id="txtAvatar">
+
+                        </div>
+                        <img src="" height="50" width="50" id="txtImg" class="img img-circle" />
+
+                        <br />
+                        <button type="button" id="btnSelectImage" class="btn btn-primary waves-effect">Chọn hình</button>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="BirthDay">Ngày sinh(<span class="col-pink">*</span>)</label>
+                            <input type="date" name="BirthDay" class="datepicker form-control" id="txt_BirthDay" placeholder="Chọn ngày..." required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Gender">Giới tính</label>
+                        <br />
+                        <input name="Gender" type="radio" id="Nam" value="1" checked />
+                        <label for="Nam">Nam</label>
+                        <input name="Gender" type="radio" value="0" id="Nu" />
+                        <label for="Nu">Nữ</label>
+                        <input name="Gender" type="radio" value="-1" class="with-gap" id="Khac" />
+                        <label for="Khac">Khác</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="Address">Địa chỉ</label>
+                            <input type="text" class="form-control" name="Address" id="txt_Address">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="PhoneNumber">Số điện thoại(<span class="col-pink">*</span>)</label>
+                            <input type="tel" class="form-control" name="PhoneNumber" id="txt_PhoneNumber" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <label for="EmailAddress">Địa chỉ email(<span class="col-pink">*</span>)</label>
+                            <input type="email" class="form-control" name="EmailAddress" id="txt_Email" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-lg-12">
+                            <div class="form-group">
+                                <div class="form-horizontal">
+                                    <label class="control-label">Lớp(<span class="col-pink">*</span>)</label>
+                                    <select class="form-control selectListClass" id="txtMyClassList" name="MyClass" required></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span>Các trường có dấu (<span class="col-pink">*</span>) là bắt buộc nhập</span>
+
+                    </div>
+                    <button type="button" class="btn btn-primary m-t-15 waves-effect pull-l6" id="btnNext">Tiếp tục</button>
+                </form>
+            </div>
+        </div>
+        <div class="card" id="contractForm" hidden>
+            <div class="header">
+                <h2>Upload các biểu mẫu được yêu cầu</h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right"></ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <div class=" info-box bg-default">
+                    <div class="icon">
+                        <i class="material-icons">error_outline</i>
+                    </div>
+                    <div class="content">
+
+                        <div class="text">
+                            <h4>Kéo đơn xin nội trú ở ký túc xá để chúng tôi xét hợp đồng (.doc,.docx)</h4>
+                        </div>
+                        <span class="small col-pink mb-5">Hồ sơ sẻ bị loại bỏ nếu hợp đồng không hợp lệ</span>
+                    </div>
+                </div>
+                <form action="/Contract/uploadContract"
+                      class="dropzone"
+                      id="my-awesome-dropzone"></form>
+                <div class="row">
+                    <div class="col-md-12 m-t-20">
+
+                        <a href="#" class="btn btn-primary waves-effect" id="btn-finish">Hoàn thành</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

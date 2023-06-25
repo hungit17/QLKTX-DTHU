@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Biểu đồ thống kê sinh viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/studentChart.js"></script>
+
+}
+
+<div class="alert alert-info align-center" >
+    Biểu đồ thống kê sinh viên
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <h4 class="text-center">Thống kê sinh viên theo giới tính</h4>
+                </div>
+            </div>
+            <div class="body">
+                <canvas id="_StudentByGender"></canvas>
+            </div>
+        </div>
+        <div class="card">
+            <div class="header">
+                <div class="row">
+                    <h4 class="text-center">Thống kê sinh viên theo từng lớp</h4>
+                </div>
+            </div>
+            <div class="body">
+                <canvas id="_StudentByDepartment"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

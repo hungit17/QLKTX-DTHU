@@ -1,0 +1,320 @@
+﻿@{
+    ViewBag.Title = "Danh sách hóa đơn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section jsFooter{
+    <script src="~/Assets/template/js/controllers/billController.js"></script>
+      
+}
+
+<div class="alert alert-info align-center">
+    Danh sách hóa đơn ký túc xá sinh viên
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <ul class="nav nav-tabs" role="tablist" style="margin-left:4px">
+                <li role="presentation" class="active">
+                    <a href="#home_with_icon_title" data-toggle="tab">
+                        <i class="material-icons col-pink">home</i> HOME
+                    </a>
+                </li>
+
+                <li role="presentation">
+                    <a href="#danhsach" data-toggle="tab">
+                        <i class="material-icons col-light-green">list</i> Xem danh sách
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#thongke" data-toggle="tab">
+                        <i class="material-icons col-blue">show_chart</i> Chưa thanh toán
+                    </a>
+                </li>
+            </ul>
+            <div class="body">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home_with_icon_title">
+
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a class="btn btn-primary waves-effect waitMe" href="/Bill/ExportExcel">
+                                        <i class="material-icons"></i> Xuất ra excel
+                                    </a>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-10">
+                                        <div class="form-group form-inline pull-left">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" placeholder="Tìm theo phòng..." name="Search" id="txtSearch">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <i class="btn btn-dark material-icons pull-right" id="btn-refresh">autorenew</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div id="formAddNew">
+                                <form id="frmSaveData" class="form-inline">
+                                    <div class="row clearfix">
+                                        <div class="col-md-6 col-xs-12 col-lg-6">
+                                            <div class="form-group">
+
+                                                <div class="form-line">
+
+                                                    <label class="control-label">Ngày lập hóa đơn</label>
+                                                    <input type="date" id="txtCreatedDate" class="form-control " name="CreatedDate" value="@DateTime.Now" required />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-xs-12 col-lg-6">
+                                            <div class="form-group">
+
+                                                <div class="form-line">
+
+                                                    <label class="control-label">Hạn thu</label>
+                                                    <input type="date" id="txtExpiredDate" class="form-control" name="ExpiredDate" value="" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-6 col-xs-12 col-lg-6">
+                                            <div class="form-group">
+
+                                                <div class="form-horizontal">
+
+                                                    <label class="control-label">Chọn phòng</label>
+                                                    <select class="form-control selectListRoom" id="txtRoomList" name="Room"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-12">
+                                            <button type="button" id="btn-AddNew" class="btn btn-primary btn-lg m-t-20 waves-effect">Tạo hóa đơn</button>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" name="selectAll" id="selectAll" class="filled-in chk-col-red" />
+                                                <label for="selectAll"></label>
+                                            </th>
+                                            <th>Tên phòng</th>
+                                            <th>Tiền điện</th>
+                                            <th>Tiền nước</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Thanh toán</th>
+                                            <th>Thao tác</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbData"></tbody>
+
+                                </table>
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                                        <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                        <div class="pagination" id="pagination">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>         <div role="tabpanel" class="tab-pane fade in active" id="danhsach">
+
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a class="btn btn-primary waves-effect waitMe" href="/Bill/ExportExcel">
+                                        <i class="material-icons"></i> Xuất ra excel
+                                    </a>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="col-sm-10">
+                                        <div class="form-group form-inline pull-left">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" placeholder="Tìm theo phòng..." name="Search" id="txtSearch">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <i class="btn btn-dark material-icons pull-right" id="btn-refresh">autorenew</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+
+                                        <div class="form-line">
+
+                                            <label class="control-label">Từ ngày</label>
+                                            <input type="date" id="sortCreatedDate" class="form-control " name="CreatedDate" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+
+                                        <div class="form-line">
+
+                                            <label class="control-label">Đến ngày</label>
+                                            <input type="date" id="sortExpiredDate" class="form-control " name="ExpiredDate" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-default waves-effect filter mt-5" name="name" value=""><i class="material-icons">filter_list</i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+
+                                            <th>Tên phòng</th>
+                                            <th>Tiền điện</th>
+                                            <th>Tiền nước</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Thanh toán</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbListData"></tbody>
+
+                                </table>
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+                                        <p>Trang <mark><span id="currentpage"></span></mark> tổng số <mark><span id="totalpage"></span></mark> trang</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                        <div class="pagination" id="pagination">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="thongke">
+
+                        <div class="header">
+                            <div class="row">
+                                <h4 class="col-pink text-center">
+
+                                    Danh sách phòng chưa thanh toán hóa đơn
+                                </h4>
+
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="alert alert-info text-center" id="notifi"></div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Tên phòng</th>
+                                            <th>Tiền điện</th>
+                                            <th>Tiền nước</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Thanh toán</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbDontBill"></tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+<script id="data-template" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+        <td>
+            <input type="checkbox" id="select-{{ID}}" name="selectAll" data-id="{{ID}}" class="chk-col-red selectedItem" />
+            <label for="select-{{ID}}"></label>
+        </td>
+        <td>{{RoomName}}</td>
+        <td>{{{TienDien}}}</td>
+        <td>{{{TienNuoc}}}</td>
+        <td>{{{TongTien}}}</td>
+        <td>{{{ThanhToan}}}</td>
+
+        <td>
+            <a href="/Bill/Payment/{{ID}}">
+                <i class="material-icons">payment</i>
+            </a>
+            <a class="col-pink waves-effect btn-delete" data-toggle="tooltip" title="Hooray!" data-id="{{ID}}">
+                <i class="material-icons">delete_forever</i>
+            </a>
+        </td>
+    </tr>
+
+</script>
+<script id="data-DontBill" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+        <td>{{RoomName}}</td>
+        <td>{{{TienDien}}}</td>
+        <td>{{{TienNuoc}}}</td>
+        <td>{{{TongTien}}}</td>
+        <td>{{{ThanhToan}}}</td>
+
+    </tr>
+
+</script>
+
+<script id="data-ListBill" type="x-tmpl-mustache">
+    <tr class="row_item" data-id="{{ID}}">
+
+        <input type="hidden" id="txtId" value="{{ID}}" />
+        <td>{{RoomName}}</td>
+        <td>{{{TienDien}}}</td>
+        <td>{{{TienNuoc}}}</td>
+        <td>{{{TongTien}}}</td>
+        <td>{{{ThanhToan}}}</td>
+
+    </tr>
+
+</script>
+
+
+

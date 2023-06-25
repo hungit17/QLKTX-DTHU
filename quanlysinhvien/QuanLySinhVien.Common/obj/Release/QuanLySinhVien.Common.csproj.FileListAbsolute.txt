@@ -1,0 +1,6 @@
+D:\IDE-VisualStudio\QuanLySinhVien\QuanLySinhVien.Common\bin\Release\QuanLySinhVien.Common.dll
+D:\IDE-VisualStudio\QuanLySinhVien\QuanLySinhVien.Common\bin\Release\QuanLySinhVien.Common.pdb
+D:\IDE-VisualStudio\QuanLySinhVien\QuanLySinhVien.Common\obj\Release\QuanLySinhVien.Common.csprojResolveAssemblyReference.cache
+D:\IDE-VisualStudio\QuanLySinhVien\QuanLySinhVien.Common\obj\Release\QuanLySinhVien.Common.csproj.CoreCompileInputs.cache
+D:\IDE-VisualStudio\QuanLySinhVien\QuanLySinhVien.Common\obj\Release\QuanLySinhVien.Common.dll
+D:\IDE-VisualStudio\QuanLySinhVien\QuanLySinhVien.Common\obj\Release\QuanLySinhVien.Common.pdb

@@ -1,0 +1,47 @@
+﻿
+@using QuanLySinhVien.Webs.Models.Identity
+@model LoginViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Đăng nhập";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Xác thực tài khoản - Hệ thống quản lý ký túc xá sinh viên trường đại học Quảng Nam</title>
+    <!-- Favicon-->
+    <link rel="icon" href="/Assets/template/favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core Css -->
+    <link href="/Assets/template/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom Css -->
+    <link href="/Assets/template/css/style.css" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="login-box">
+      
+        <div class="alert alert-light">
+            <p>
+                Xác thực email thành công. Hãy @Html.ActionLink("Click vào đây để login", "Login", "Account", routeValues: null,htmlAttributes: new { id = "loginLink" ,@class="btn btn-danger"})
+            </p>
+        </div>
+    </div>
+    <!-- Jquery Core Js -->
+    <script src="/Assets/template/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="/Assets/template/plugins/bootstrap/js/bootstrap.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="/Assets/template/plugins/node-waves/waves.js"></script>
+    <!-- Validation Plugin Js -->
+    <!-- Custom Js -->
+    <script src="/Assets/template/js/admin.js"></script>
+    <script src="/Assets/template/js/pages/examples/sign-in.js"></script>
+</body>
+</html>
